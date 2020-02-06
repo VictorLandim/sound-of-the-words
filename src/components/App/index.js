@@ -3,6 +3,7 @@ import * as Tone from 'tone';
 import { transform } from '../../utils/transformer';
 import { play } from '../../utils/audioPlayer';
 import { Main, Container, Input, Text, Header, Button, Letter } from './styles';
+import GlobalStyles from '../../globalStyles';
 
 // TODO: play notes at the same time: (create chords)
 
@@ -71,6 +72,8 @@ const App = () => {
   };
   return (
     <Main>
+      <GlobalStyles />
+
       <Header>Sound of the Words</Header>
       <Container>
         {renderText()}
