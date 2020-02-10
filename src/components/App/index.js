@@ -1,24 +1,38 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Tone from 'tone';
-import { transform } from '../../utils/transformer';
+
+import { useTransformer } from '../../utils/transformer';
 import { play } from '../../utils/audioPlayer';
-import { Main, Container, Input, Text, Header, Button, Letter } from './styles';
+
+import { Main, AppContainer } from './styles';
+
 import GlobalStyles from '../../globalStyles';
+
+import Header from '../Header';
+import Player from '../Player';
+import Settings from '../Settings';
 
 // TODO: play notes at the same time: (create chords)
 
 // Hello world
 // my name is
 const App = () => {
-  const defaultContent = `Words dance.`;
+  // const defaultContent = `Words dance.`;
+  const defaultText = `Pe, ur, pla pla.`;
 
-  const [text, setText] = useState(defaultContent);
+  const [text, setText] = useState(defaultText);
   const [currentChar, setCurrentChar] = useState(null);
   const [playing, setPlaying] = useState(false);
 
-  const onChange = e => setText(e.target.value);
+  const [root, setRoot, pitch, setPitch, scale, setScale, simpleTransform] = useTransformer();
 
-  const onClick = () => {
+  const onRootChange = e => setRoot(e.target.value);
+  const onPitchChange = e => setPitch(e.target.value);
+  const onScaleChange = e => setScale(e.target.value);
+
+  const onInputChange = e => setText(e.target.value);
+
+  const onButtonClick = () => {
     if (!text) return;
 
     setPlaying(!playing);
@@ -26,7 +40,7 @@ const App = () => {
     if (playing) {
       stopTone();
     } else {
-      const transformedText = transform(text);
+      const transformedText = simpleTransform(text);
       play(transformedText, setCurrentChar);
     }
   };
@@ -41,44 +55,35 @@ const App = () => {
     Tone.Transport.position = 0;
     Tone.Transport.cancel(0);
 
-    setCurrentChar(null);
+    setCurrentChar(0);
   };
 
   useEffect(() => {
     startTone();
   }, []);
 
-  const renderText = () => {
-    if (!playing) return <Input onChange={onChange} value={text} />;
-
-    return (
-      <Text>
-        {[...text].map((letter, i) => {
-          // if (letter === '\n') return <br />;
-
-          return (
-            <Letter
-              suppressContentEditableWarning={true}
-              highlight={currentChar === i}
-              contentEditable="false"
-              key={`${letter}${i}`}
-            >
-              {letter}
-            </Letter>
-          );
-        })}
-      </Text>
-    );
-  };
   return (
     <Main>
       <GlobalStyles />
+      <Header text="Sound of the Words." />
 
-      <Header>Sound of the Words</Header>
-      <Container>
-        {renderText()}
-        <Button onClick={onClick}>{playing ? '◼' : '►'}</Button>
-      </Container>
+      <AppContainer>
+        <Player
+          playing={playing}
+          currentChar={currentChar}
+          text={text}
+          onInputChange={onInputChange}
+          onButtonClick={onButtonClick}
+        />
+        <Settings
+          root={root}
+          pitch={pitch}
+          scale={scale}
+          onRootChange={onRootChange}
+          onPitchChange={onPitchChange}
+          onScaleChange={onScaleChange}
+        />
+      </AppContainer>
     </Main>
   );
 };

@@ -11,23 +11,25 @@ const play = async (notes, setCurrent) => {
       synth.triggerAttackRelease(note, '20hz', time);
 
       Tone.Draw.schedule(() => {
-        setCurrent(pos++ % notes.length);
+        const nextNote = pos++ % notes.length;
+        
+        setCurrent(nextNote);
         // console.log(time);
         // console.log(synthPart.progress);
       }, time);
     },
     notes,
-    '4n'
+    '8n'
   );
   // Setup the synth to be ready to play on beat 1
 
-  synthPart.humanize = true;
+  // synthPart.humanize = "32n";
 
   synthPart.start();
 
   Tone.Transport.latencyHint = 'fastest';
 
-  Tone.Transport.start('+0.1');
+  Tone.Transport.start('+0.5');
 };
 
 export { play };
