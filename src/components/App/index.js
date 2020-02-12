@@ -13,12 +13,15 @@ import Player from '../Player';
 import Settings from '../Settings';
 
 // TODO: play notes at the same time: (create chords)
+// TODO: get words from url params
+// TODO: save params in localstorage
 
 // Hello world
 // my name is
 const App = () => {
   // const defaultContent = `Words dance.`;
-  const defaultText = `Pe, ur, pla pla.`;
+  // const defaultText = `Pe, ur, pla pla.`;
+  const defaultText = 'Listen to what you type.';
 
   const [text, setText] = useState(defaultText);
   const [currentChar, setCurrentChar] = useState(null);
@@ -79,6 +82,7 @@ const App = () => {
           root={root}
           pitch={pitch}
           scale={scale}
+          playing={playing}
           onRootChange={onRootChange}
           onPitchChange={onPitchChange}
           onScaleChange={onScaleChange}

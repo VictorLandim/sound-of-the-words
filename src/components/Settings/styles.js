@@ -27,6 +27,8 @@ export const Select = styled.select`
   color: #303030;
   box-shadow: 0px 5px 50px 0px rgba(0, 0, 0, 0.3);
   font-family: 'Lato', sans-serif;
+  /* appearance: none; */
+  -webkit-appearance: initial;
 `;
 
 export const Row = styled.div`

@@ -9,14 +9,14 @@ export const Header = styled.h1`
   text-align: left;
   color: #303030;
   opacity: 0.3;
-  width: 100px;
+  width: 40px;
   z-index: -1;
 
   @media only screen and (max-width: 768px) {
     width: 100%;
     text-align: center;
-    font-size: 32px;
+    font-size: 22px;
     bottom: unset;
-    top: 0;
+    top: 10px;
   }
 `;

@@ -1,52 +1,54 @@
 import { useState } from 'react';
 import { Scale, Tonal } from '@tonaljs/modules';
 
-export const useTransformer = () => {
+export const useTransformer = (selection = 'simpleTransform') => {
   const [root, setRoot] = useState('E');
   const [pitch, setPitch] = useState('3');
   const [scale, setScale] = useState('major pentatonic');
 
-  // TODO: consoantes sao curtas, vogais sao longas! :S
+  const transformers = {
+    // TODO: consoantes sao curtas, vogais sao longas! :S
 
-  // charset is is the unique characters in the string
-  const simpleTransform = text => {
-    const scaleNotes = Scale.scale(`${root}${pitch} ${scale}`).notes;
-    const scaleSize = scaleNotes.length;
-    const uniqueChars = {};
+    // charset is is the unique characters in the string
 
-    [...text].forEach(char => {
-      if (char in uniqueChars) uniqueChars[char]++;
-      else uniqueChars[char] = 1;
-    });
+    simpleTransform(text) {
+      const scaleNotes = Scale.scale(`${root}${pitch} ${scale}`).notes;
+      const scaleSize = scaleNotes.length;
+      const uniqueChars = {}; // TODO
 
-    // console.log(uniqueChars);
+      [...text].forEach(char => {
+        if (char in uniqueChars) uniqueChars[char]++;
+        else uniqueChars[char] = 1;
+      });
 
-    return [...text].map((char, i, array) => {
-      const isLetter = letter =>
-        char.toLowerCase().charCodeAt(0) >= 97 && char.toLowerCase().charCodeAt(0) <= 122;
+      // console.log(uniqueChars);
 
-      // rest
-      // if (char === ' ') return null;
-      if (i === 0) return scaleNotes[0];
+      return [...text].map((char, i, array) => {
+        const isLetter = letter =>
+          char.toLowerCase().charCodeAt(0) >= 97 && char.toLowerCase().charCodeAt(0) <= 122;
 
-      // the first character is the root note
-      if (char === ' ' || char === '.') return Tonal.transpose(scaleNotes[0], '-8P');
+        // rest
+        // if (char === ' ') return null;
+        if (i === 0) return scaleNotes[0];
 
-      if (char === ',') return Tonal.transpose(scaleNotes[0], '5P');
+        // the first character is the root note
+        if (char === ' ' || char === '.') return Tonal.transpose(scaleNotes[0], '-8P');
 
-      // the most frequent char is a highest root note
+        if (char === ',') return Tonal.transpose(scaleNotes[0], '5P');
 
-      const alphabetPos = isLetter(char) ? char.toLowerCase().charCodeAt(0) - 97 : 0;
+        // the most frequent char is a highest root note
 
-      const noteIndex = alphabetPos % scaleSize;
+        const alphabetPos = isLetter(char) ? char.toLowerCase().charCodeAt(0) - 97 : 0;
 
-      const note = scaleNotes[noteIndex];
+        const noteIndex = alphabetPos % scaleSize;
 
-      return note;
-    });
+        const note = scaleNotes[noteIndex];
+
+        return note;
+      });
+    },
+    complexTransform() {}
   };
 
-  const complexTransform = () => {};
-
-  return [root, setRoot, pitch, setPitch, scale, setScale, simpleTransform];
+  return [root, setRoot, pitch, setPitch, scale, setScale, transformers[selection]];
 };

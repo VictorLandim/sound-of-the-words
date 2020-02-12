@@ -11,7 +11,7 @@ export const EditorContainer = styled.div`
 
   @media only screen and (max-width: 768px) {
     margin-bottom: 20px;
-    margin-top: 350px;
+    margin-top: 75px;
   }
 `;
 
@@ -28,6 +28,7 @@ const textBlockCss = css`
   border: 0;
 
   @media only screen and (max-width: 768px) {
+    height: 300px;
   }
 `;
 

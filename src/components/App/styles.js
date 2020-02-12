@@ -8,6 +8,10 @@ export const Main = styled.main`
   justify-content: center;
   flex-direction: column;
   padding: 0 30px;
+
+  @media only screen and (max-width: 768px) {
+    justify-content: flex-start;
+  }
 `;
 
 export const AppContainer = styled.div`
