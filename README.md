@@ -5,7 +5,7 @@ Try it at: https://sound-of-the-words.netlify.com/
 
 ## Todo:
 [] Get default text from URL params
-[] Improve melody generation logic
+[] Improve melody generation logic: assign a duration to each letter as well (https://github.com/Tonejs/Tone.js/wiki/Events#tonepart)
 [] Save params in localstorage
 [] Implement chords (play multiple letters at once)
 [] Implement share feature
