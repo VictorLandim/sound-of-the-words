@@ -21,7 +21,7 @@ import Settings from '../Settings';
 const App = () => {
   // const defaultContent = `Words dance.`;
   // const defaultText = `Pe, ur, pla pla.`;
-  const defaultText = 'Listen to what you type.';
+  const defaultText = 'Words dance.';
 
   const [text, setText] = useState(defaultText);
   const [currentChar, setCurrentChar] = useState(null);
